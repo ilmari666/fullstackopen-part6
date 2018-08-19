@@ -20,6 +20,11 @@ export const notify = message => ({
   message
 });
 
+export const anecdoteFilter = filter => ({
+  type: 'FILTER',
+  filter
+});
+
 const getId = () => (100000 * Math.random()).toFixed(0);
 
 const asObject = anecdote => {
@@ -32,7 +37,8 @@ const asObject = anecdote => {
 
 const initialState = {
   anecdotes: anecdotesAtStart.map(asObject),
-  notification: ''
+  notification: '',
+  filter: ''
 };
 
 const reducer = (store = initialState, action) => {
@@ -59,6 +65,12 @@ const reducer = (store = initialState, action) => {
     return {
       ...store,
       notification: action.message
+    };
+  }
+  if (action.type === 'FILTER') {
+    return {
+      ...store,
+      filter: action.filter
     };
   }
 

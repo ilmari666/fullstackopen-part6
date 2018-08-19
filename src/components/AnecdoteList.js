@@ -13,14 +13,18 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    const anecdotes = this.context.store
-      .getState()
-      .anecdotes.sort((a, b) => b.votes - a.votes);
+    const { anecdotes, filter } = this.context.store.getState();
+    const filteredAnecdotes =
+      filter === ''
+        ? anecdotes
+        : anecdotes
+            .filter(anecdote => anecdote.content.indexOf(filter) !== -1)
+            .sort((a, b) => b.votes - a.votes);
 
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.map(anecdote => {
+        {filteredAnecdotes.map(anecdote => {
           const { id, content, votes } = anecdote;
           return (
             <div key={id}>
