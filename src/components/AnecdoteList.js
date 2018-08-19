@@ -1,11 +1,21 @@
 import React from 'react';
-import { anecdoteVote } from '../reducers/anecdoteReducer';
+import PropTypes from 'prop-types';
+import { anecdoteVote, notify } from '../reducers/anecdoteReducer';
 
 class AnecdoteList extends React.Component {
+  componentDidMount() {
+    const { store } = this.context;
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
-    const anecdotes = this.props.store
+    const anecdotes = this.context.store
       .getState()
-      .sort((a, b) => b.votes - a.votes);
+      .anecdotes.sort((a, b) => b.votes - a.votes);
 
     return (
       <div>
@@ -18,7 +28,16 @@ class AnecdoteList extends React.Component {
               <div>
                 has {votes}
                 <button
-                  onClick={() => this.props.store.dispatch(anecdoteVote(id))}
+                  onClick={() => {
+                    this.context.store.dispatch(anecdoteVote(id));
+                    this.context.store.dispatch(
+                      notify(`You voted '${content}'`)
+                    );
+                    setTimeout(
+                      () => this.context.store.dispatch(notify('')),
+                      5000
+                    );
+                  }}
                 >
                   vote
                 </button>
@@ -30,5 +49,9 @@ class AnecdoteList extends React.Component {
     );
   }
 }
+
+AnecdoteList.contextTypes = {
+  store: PropTypes.object
+};
 
 export default AnecdoteList;

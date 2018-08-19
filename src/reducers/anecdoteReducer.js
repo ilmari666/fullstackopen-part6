@@ -15,6 +15,10 @@ export const anecdoteVote = id => ({
   type: 'VOTE',
   id
 });
+export const notify = message => ({
+  type: 'NOTIFY',
+  message
+});
 
 const getId = () => (100000 * Math.random()).toFixed(0);
 
@@ -26,17 +30,36 @@ const asObject = anecdote => {
   };
 };
 
-const initialState = anecdotesAtStart.map(asObject);
+const initialState = {
+  anecdotes: anecdotesAtStart.map(asObject),
+  notification: ''
+};
 
 const reducer = (store = initialState, action) => {
+  const { anecdotes } = store;
   if (action.type === 'VOTE') {
-    const old = store.filter(a => a.id !== action.id);
-    const voted = store.find(a => a.id === action.id);
-
-    return [...old, { ...voted, votes: voted.votes + 1 }];
+    const old = anecdotes.filter(a => a.id !== action.id);
+    const voted = anecdotes.find(a => a.id === action.id);
+    return {
+      ...store,
+      anecdotes: [...old, { ...voted, votes: voted.votes + 1 }]
+    };
   }
   if (action.type === 'CREATE') {
-    return [...store, { content: action.content, id: getId(), votes: 0 }];
+    store.dispatch(notify(`Anecdote: ${action.content} created.`));
+    return {
+      ...store,
+      anecdotes: [
+        ...anecdotes,
+        { content: action.content, id: getId(), votes: 0 }
+      ]
+    };
+  }
+  if (action.type === 'NOTIFY') {
+    return {
+      ...store,
+      notification: action.message
+    };
   }
 
   return store;
