@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { anecdoteFilter } from '../reducers/anecdoteReducer';
 
 class Filter extends React.Component {
   handleChange = e => {
     const filter = e.target.value;
-    this.context.store.dispatch(anecdoteFilter(filter));
+    this.props.anecdoteFilter(filter);
   };
   render() {
     const style = {
@@ -20,8 +20,7 @@ class Filter extends React.Component {
   }
 }
 
-Filter.contextTypes = {
-  store: PropTypes.object
-};
-
-export default Filter;
+export default connect(
+  null,
+  { anecdoteFilter }
+)(Filter);

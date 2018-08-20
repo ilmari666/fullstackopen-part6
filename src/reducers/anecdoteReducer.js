@@ -52,7 +52,6 @@ const reducer = (store = initialState, action) => {
     };
   }
   if (action.type === 'CREATE') {
-    store.dispatch(notify(`Anecdote: ${action.content} created.`));
     return {
       ...store,
       anecdotes: [

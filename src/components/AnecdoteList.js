@@ -1,25 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { anecdoteVote, notify } from '../reducers/anecdoteReducer';
 
+function filterAndSortAnecdotes(anecdotes, filter) {
+  return (filter === ''
+    ? anecdotes
+    : anecdotes.filter(anecdote => anecdote.content.indexOf(filter) !== -1)
+  ).sort((a, b) => b.votes - a.votes);
+}
+
 class AnecdoteList extends React.Component {
-  componentDidMount() {
-    const { store } = this.context;
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   render() {
-    const { anecdotes, filter } = this.context.store.getState();
-    const filteredAnecdotes =
-      filter === ''
-        ? anecdotes
-        : anecdotes
-            .filter(anecdote => anecdote.content.indexOf(filter) !== -1)
-            .sort((a, b) => b.votes - a.votes);
+    const { anecdotes, filter } = this.props;
+    const filteredAnecdotes = filterAndSortAnecdotes(anecdotes, filter);
 
     return (
       <div>
@@ -33,14 +26,9 @@ class AnecdoteList extends React.Component {
                 has {votes}
                 <button
                   onClick={() => {
-                    this.context.store.dispatch(anecdoteVote(id));
-                    this.context.store.dispatch(
-                      notify(`You voted '${content}'`)
-                    );
-                    setTimeout(
-                      () => this.context.store.dispatch(notify('')),
-                      5000
-                    );
+                    this.props.anecdoteVote(id);
+                    this.props.notify(`You voted '${content}'`);
+                    setTimeout(() => this.props.notify(''), 5000);
                   }}
                 >
                   vote
@@ -54,8 +42,12 @@ class AnecdoteList extends React.Component {
   }
 }
 
-AnecdoteList.contextTypes = {
-  store: PropTypes.object
-};
+const mapStateToProps = state => ({
+  anecdotes: state.anecdotes,
+  filter: state.filter
+});
 
-export default AnecdoteList;
+export default connect(
+  mapStateToProps,
+  { anecdoteVote, notify }
+)(AnecdoteList);
