@@ -27,7 +27,7 @@ class AnecdoteForm extends React.Component {
 }
 
 export default connect(
-  () => ({}),
+  null,
   {
     anecdoteCreation,
     notify

@@ -2,6 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { anecdoteVote, notify } from '../reducers/anecdoteReducer';
 
+const AnecdoteList = props => {
+  const { anecdotesToShow, anecdoteVote, notify } = props;
+
+  return (
+    <div>
+      <h2>Anecdotes</h2>
+      {anecdotesToShow.map(anecdote => {
+        const { id, content, votes } = anecdote;
+        return (
+          <div key={id}>
+            <div>{content}</div>
+            <div>
+              has {votes}
+              <button
+                onClick={() => {
+                  anecdoteVote(id);
+                  notify(`You voted '${content}'`);
+                  setTimeout(() => notify(''), 5000);
+                }}
+              >
+                vote
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 function filterAndSortAnecdotes(anecdotes, filter) {
   return (filter === ''
     ? anecdotes
@@ -9,42 +39,8 @@ function filterAndSortAnecdotes(anecdotes, filter) {
   ).sort((a, b) => b.votes - a.votes);
 }
 
-class AnecdoteList extends React.Component {
-  render() {
-    const { anecdotes, filter } = this.props;
-    const filteredAnecdotes = filterAndSortAnecdotes(anecdotes, filter);
-
-    return (
-      <div>
-        <h2>Anecdotes</h2>
-        {filteredAnecdotes.map(anecdote => {
-          const { id, content, votes } = anecdote;
-          return (
-            <div key={id}>
-              <div>{content}</div>
-              <div>
-                has {votes}
-                <button
-                  onClick={() => {
-                    this.props.anecdoteVote(id);
-                    this.props.notify(`You voted '${content}'`);
-                    setTimeout(() => this.props.notify(''), 5000);
-                  }}
-                >
-                  vote
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
-
 const mapStateToProps = state => ({
-  anecdotes: state.anecdotes,
-  filter: state.filter
+  anecdotesToShow: filterAndSortAnecdotes(state.anecdotes, state.filter)
 });
 
 export default connect(
