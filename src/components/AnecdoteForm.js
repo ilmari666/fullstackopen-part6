@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { anecdoteCreation, notify } from '../reducers/anecdoteReducer';
+import { anecdoteCreation, notify } from '../actions';
 
 class AnecdoteForm extends React.Component {
   handleSubmit = e => {

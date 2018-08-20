@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { anecdoteVote, notify } from '../reducers/anecdoteReducer';
+import { anecdoteVote, notify } from '../actions';
 
 const AnecdoteList = props => {
   const { anecdotesToShow, anecdoteVote, notify } = props;
-
   return (
     <div>
       <h2>Anecdotes</h2>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { anecdoteFilter } from '../reducers/anecdoteReducer';
+import { anecdoteFilter } from '../actions';
 
 class Filter extends React.Component {
   handleChange = e => {
