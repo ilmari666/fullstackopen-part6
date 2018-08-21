@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import anecdoteService from '../services/anecdotes';
 import { anecdoteVote, notify } from '../actions';
 
 const AnecdoteList = props => {
@@ -15,8 +16,13 @@ const AnecdoteList = props => {
             <div>
               has {votes}
               <button
-                onClick={() => {
-                  anecdoteVote(id);
+                onClick={async () => {
+                  const voted = {
+                    ...anecdote,
+                    votes: anecdote.votes + 1
+                  };
+                  anecdoteService.vote(voted);
+                  anecdoteVote(voted);
                   notify(`You voted '${content}'`);
                   setTimeout(() => notify(''), 5000);
                 }}
@@ -32,10 +38,11 @@ const AnecdoteList = props => {
 };
 
 function filterAndSortAnecdotes(anecdotes, filter) {
-  return (filter === ''
-    ? anecdotes
-    : anecdotes.filter(anecdote => anecdote.content.indexOf(filter) !== -1)
-  ).sort((a, b) => b.votes - a.votes);
+  const filteredAnecdotes =
+    filter === ''
+      ? anecdotes
+      : anecdotes.filter(anecdote => anecdote.content.indexOf(filter) !== -1);
+  return filteredAnecdotes.sort((a, b) => b.votes - a.votes);
 }
 
 const mapStateToProps = state => ({
