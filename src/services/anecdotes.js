@@ -12,9 +12,9 @@ const createNew = async content => {
   return response.data;
 };
 
-const vote = async anecdote => {
+const update = async anecdote => {
   const response = await axios.put(`${apiUrl}/${anecdote.id}`, anecdote);
   return response.data;
 };
 
-export default { getAll, createNew, vote };
+export default { getAll, createNew, update };

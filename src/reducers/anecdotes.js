@@ -7,7 +7,6 @@ const anecdoteReducer = (store = [], action) => {
   if (action.type === 'CREATE') {
     return [...store, action.content];
   }
-
   if (action.type === 'INIT_ANECDOTES') {
     return [...store, ...action.data];
   }

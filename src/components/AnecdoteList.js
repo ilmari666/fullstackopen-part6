@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import anecdoteService from '../services/anecdotes';
-import { anecdoteVote, notify } from '../actions';
+import { anecdoteVote } from '../actions/anecdote';
 
 const AnecdoteList = props => {
-  const { anecdotesToShow, anecdoteVote, notify } = props;
+  const { anecdotesToShow, anecdoteVote } = props;
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -17,14 +16,7 @@ const AnecdoteList = props => {
               has {votes}
               <button
                 onClick={async () => {
-                  const voted = {
-                    ...anecdote,
-                    votes: anecdote.votes + 1
-                  };
-                  anecdoteService.vote(voted);
-                  anecdoteVote(voted);
-                  notify(`You voted '${content}'`);
-                  setTimeout(() => notify(''), 5000);
+                  anecdoteVote(anecdote);
                 }}
               >
                 vote
@@ -51,5 +43,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { anecdoteVote, notify }
+  { anecdoteVote }
 )(AnecdoteList);

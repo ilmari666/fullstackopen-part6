@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import anecdoteService from './services/anecdotes';
-import { anecdoteInitialization } from './actions';
+
+import { anecdoteInitialization } from './actions/anecdote';
 import Notification from './components/Notification';
 import AnecdoteForm from './components/AnecdoteForm';
 import AnecdoteList from './components/AnecdoteList';
@@ -9,8 +9,7 @@ import Filter from './components/Filter';
 
 class App extends React.Component {
   componentDidMount = async () => {
-    const anecdotes = await anecdoteService.getAll();
-    this.props.anecdoteInitialization(anecdotes);
+    this.props.anecdoteInitialization();
   };
 
   render() {
