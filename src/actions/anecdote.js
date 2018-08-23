@@ -1,5 +1,4 @@
 import anecdoteService from '../services/anecdotes';
-import notify from './notify';
 
 export const anecdoteCreation = content => async dispatch => {
   const anecdote = await anecdoteService.createNew(content);
@@ -7,7 +6,6 @@ export const anecdoteCreation = content => async dispatch => {
     type: 'CREATE',
     content: anecdote
   });
-  notify(`${anecdote.content} voted`);
 };
 
 export const anecdoteInitialization = () => async dispatch => {
@@ -25,13 +23,10 @@ export const anecdoteVote = anecdote => async dispatch => {
   };
 
   anecdoteService.update(voted);
-
   dispatch({
     type: 'VOTE',
     content: voted
   });
-
-  notify(`You voted ${voted.content}`);
 };
 
 export const anecdoteFilter = filter => ({

@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { anecdoteVote } from '../actions/anecdote';
+import notify from '../actions/notify';
 
 const AnecdoteList = props => {
-  const { anecdotesToShow, anecdoteVote } = props;
+  const { anecdotesToShow, anecdoteVote, notify } = props;
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -17,6 +18,7 @@ const AnecdoteList = props => {
               <button
                 onClick={async () => {
                   anecdoteVote(anecdote);
+                  notify(`You voted ${anecdote.content}`, 5);
                 }}
               >
                 vote
@@ -43,5 +45,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { anecdoteVote }
+  { anecdoteVote, notify }
 )(AnecdoteList);

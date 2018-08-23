@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { anecdoteCreation } from '../actions/anecdote';
+import notify from '../actions/notify';
 
 class AnecdoteForm extends React.Component {
   handleSubmit = async e => {
@@ -8,6 +9,7 @@ class AnecdoteForm extends React.Component {
     const content = '' + e.target.anecdote.value;
     e.target.anecdote.value = '';
     this.props.anecdoteCreation(content);
+    this.props.notify(`${content} created`, 5);
   };
   render() {
     return (
@@ -27,6 +29,7 @@ class AnecdoteForm extends React.Component {
 export default connect(
   null,
   {
-    anecdoteCreation
+    anecdoteCreation,
+    notify
   }
 )(AnecdoteForm);
