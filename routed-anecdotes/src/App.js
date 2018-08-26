@@ -66,14 +66,14 @@ const About = () => (
 
 const Footer = () => (
   <div>
-    Anecdote app for{' '}
+    Anecdote app for
     <a href="https://courses.helsinki.fi/fi/TKT21009/121540749">
       Full Stack -sovelluskehitys
     </a>
-    . See{' '}
+    . See
     <a href="https://github.com/mluukkai/routed-anecdotes">
       https://github.com/mluukkai/routed-anecdotes
-    </a>{' '}
+    </a>
     for the source code.
   </div>
 );
@@ -140,7 +140,15 @@ class CreateNew extends React.Component {
 }
 
 const Notification = ({ notification }) => {
-  return notification ? <p>{notification}</p> : null;
+  const style = {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+    border: '1px solid green',
+    color: 'green',
+    borderRadius: '0.5rem',
+    padding: '0.5rem'
+  };
+  return notification ? <div style={style}>{notification}</div> : null;
 };
 
 class App extends React.Component {
