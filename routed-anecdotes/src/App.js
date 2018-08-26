@@ -29,7 +29,9 @@ const Anecdote = ({ anecdote }) => {
   const { content, votes, info, author, id } = anecdote;
   return (
     <div>
-      <h1>{content}</h1>
+      <h1>
+        {content} by {author}
+      </h1>
       <p>has {votes} votes</p>
       <p>
         for more info see <a href={info}>{info}</a>
@@ -38,13 +40,6 @@ const Anecdote = ({ anecdote }) => {
   );
 };
 
-/*
-          content: 'Premature optimization is the root of all evil',
-          author: 'Donald Knuth',
-          info: 'http://wiki.c2.com/?PrematureOptimization',
-          votes: 0,
-          id: '2'
-*/
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
