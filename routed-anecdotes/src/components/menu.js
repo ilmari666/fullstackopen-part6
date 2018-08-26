@@ -9,8 +9,9 @@ const Menu = () => {
     padding: '0.66rem'
   };
   const activeStyle = {
+    backgroundColor: 'white',
     fontWeight: 'bold',
-    color: 'white'
+    color: 'black'
   };
   return (
     <div style={style}>
