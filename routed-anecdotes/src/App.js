@@ -1,18 +1,42 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Link,
+  Redirect
+} from 'react-router-dom';
 
 let anecdoteTimeout;
 
-const Menu = () => (
-  <div>
-    <Link to="/">anecdotes</Link>
-    &nbsp;
-    <Link to="/new">create new</Link>
-    &nbsp;
-    <Link to="/about">about</Link>
-    &nbsp;
-  </div>
-);
+const Menu = () => {
+  const style = {
+    backgroundColor: 'grey',
+    color: 'white',
+    textTransform: 'uppercase',
+    padding: '0.66rem'
+  };
+  const activeStyle = {
+    fontWeight: 'bold',
+    color: 'white'
+  };
+  return (
+    <div style={style}>
+      <NavLink activeStyle={activeStyle} exact to="/anecdotes">
+        anecdotes
+      </NavLink>
+      &nbsp;
+      <NavLink activeStyle={activeStyle} to="/new">
+        create new
+      </NavLink>
+      &nbsp;
+      <NavLink activeStyle={activeStyle} to="/about">
+        about
+      </NavLink>
+      &nbsp;
+    </div>
+  );
+};
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -211,9 +235,11 @@ class App extends React.Component {
           <h1>Software anecdotes</h1>
           <Menu />
           <Notification notification={this.state.notification} />
+          <Route exact path="/" render={() => <Redirect to="/anecdotes" />} />
+
           <Route
             exact
-            path="/"
+            path="/anecdotes"
             render={() => <AnecdoteList anecdotes={this.state.anecdotes} />}
           />
           <Route
