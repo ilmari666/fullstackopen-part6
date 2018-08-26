@@ -11,7 +11,7 @@ let anecdoteTimeout;
 
 const Menu = () => {
   const style = {
-    backgroundColor: 'grey',
+    backgroundColor: 'lightgrey',
     color: 'white',
     textTransform: 'uppercase',
     padding: '0.66rem'
@@ -230,36 +230,38 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <h1>Software anecdotes</h1>
-          <Menu />
-          <Notification notification={this.state.notification} />
-          <Route exact path="/" render={() => <Redirect to="/anecdotes" />} />
+      <div className="container">
+        <Router>
+          <div>
+            <h1>Software anecdotes</h1>
+            <Menu />
+            <Notification notification={this.state.notification} />
+            <Route exact path="/" render={() => <Redirect to="/anecdotes" />} />
 
-          <Route
-            exact
-            path="/anecdotes"
-            render={() => <AnecdoteList anecdotes={this.state.anecdotes} />}
-          />
-          <Route
-            exact
-            path="/anecdotes/:id"
-            render={({ match }) => (
-              <Anecdote anecdote={this.anecdoteById(match.params.id)} />
-            )}
-          />
-          <Route exact path="/about" render={() => <About />} />
-          <Route
-            exact
-            path="/new"
-            render={({ history }) => (
-              <CreateNew addNew={this.addNew} history={history} />
-            )}
-          />
-          <Footer />
-        </div>
-      </Router>
+            <Route
+              exact
+              path="/anecdotes"
+              render={() => <AnecdoteList anecdotes={this.state.anecdotes} />}
+            />
+            <Route
+              exact
+              path="/anecdotes/:id"
+              render={({ match }) => (
+                <Anecdote anecdote={this.anecdoteById(match.params.id)} />
+              )}
+            />
+            <Route exact path="/about" render={() => <About />} />
+            <Route
+              exact
+              path="/new"
+              render={({ history }) => (
+                <CreateNew addNew={this.addNew} history={history} />
+              )}
+            />
+            <Footer />
+          </div>
+        </Router>
+      </div>
     );
   }
 }
