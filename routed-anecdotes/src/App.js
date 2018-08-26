@@ -55,9 +55,9 @@ const Anecdote = ({ anecdote }) => {
   const { content, votes, info, author, id } = anecdote;
   return (
     <div>
-      <h1>
+      <h3>
         {content} by {author}
-      </h1>
+      </h3>
       <p>has {votes} votes</p>
       <p>
         for more info see <a href={info}>{info}</a>
@@ -90,14 +90,14 @@ const About = () => (
 
 const Footer = () => (
   <div>
-    Anecdote app for
+    Anecdote app for{' '}
     <a href="https://courses.helsinki.fi/fi/TKT21009/121540749">
       Full Stack -sovelluskehitys
     </a>
-    . See
+    . See{' '}
     <a href="https://github.com/mluukkai/routed-anecdotes">
       https://github.com/mluukkai/routed-anecdotes
-    </a>
+    </a>{' '}
     for the source code.
   </div>
 );
