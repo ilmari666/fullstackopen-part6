@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Link,
-  Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 import About from './components/about';
 import Anecdote from './components/anecdote';
 import AnecdoteList from './components/anecdotelist';
@@ -71,7 +66,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <Container>
         <Router>
           <div>
             <h1>Software anecdotes</h1>
@@ -102,7 +97,7 @@ class App extends React.Component {
             <Footer />
           </div>
         </Router>
-      </div>
+      </Container>
     );
   }
 }
