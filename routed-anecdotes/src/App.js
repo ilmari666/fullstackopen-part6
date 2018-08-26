@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+let anecdoteTimeout;
+
 const Menu = () => (
   <div>
     <Link to="/">anecdotes</Link>
@@ -87,7 +89,6 @@ class CreateNew extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -138,6 +139,10 @@ class CreateNew extends React.Component {
   }
 }
 
+const Notification = ({ notification }) => {
+  return notification ? <p>{notification}</p> : null;
+};
+
 class App extends React.Component {
   constructor() {
     super();
@@ -166,7 +171,14 @@ class App extends React.Component {
 
   addNew = anecdote => {
     anecdote.id = (Math.random() * 10000).toFixed(0);
-    this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) });
+    this.setState({
+      anecdotes: this.state.anecdotes.concat(anecdote),
+      notification: `A new anecdote "${anecdote.content}" has been created!`
+    });
+    clearTimeout(anecdoteTimeout);
+    anecdoteTimeout = setTimeout(() => {
+      this.setState({ notification: '' });
+    }, 10000);
   };
 
   anecdoteById = id => this.state.anecdotes.find(a => a.id === id);
@@ -190,6 +202,7 @@ class App extends React.Component {
         <div>
           <h1>Software anecdotes</h1>
           <Menu />
+          <Notification notification={this.state.notification} />
           <Route
             exact
             path="/"
