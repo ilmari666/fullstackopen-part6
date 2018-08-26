@@ -1,34 +1,32 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
 
-const Menu = () => {
-  const style = {
-    backgroundColor: 'lightgrey',
-    color: 'white',
-    textTransform: 'uppercase',
-    padding: '0.66rem'
-  };
+const Navigation = () => {
   const activeStyle = {
     backgroundColor: 'white',
     fontWeight: 'bold',
     color: 'black'
   };
   return (
-    <div style={style}>
-      <NavLink activeStyle={activeStyle} exact to="/anecdotes">
-        anecdotes
-      </NavLink>
-      &nbsp;
-      <NavLink activeStyle={activeStyle} to="/new">
-        create new
-      </NavLink>
-      &nbsp;
-      <NavLink activeStyle={activeStyle} to="/about">
-        about
-      </NavLink>
-      &nbsp;
-    </div>
+    <Menu>
+      <Menu.Item link>
+        <NavLink activeStyle={activeStyle} exact to="/anecdotes">
+          anecdotes
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item link>
+        <NavLink activeStyle={activeStyle} to="/new">
+          create new
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item link>
+        <NavLink activeStyle={activeStyle} to="/about">
+          about
+        </NavLink>
+      </Menu.Item>
+    </Menu>
   );
 };
 
-export default Menu;
+export default Navigation;

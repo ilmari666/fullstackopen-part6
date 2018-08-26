@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Anecdote = ({ anecdote }) => {
-  const { content, votes, info, author, id } = anecdote;
+  const { content, votes, info, author } = anecdote;
   return (
     <div>
       <h3>
