@@ -6,7 +6,7 @@ import Anecdote from './components/anecdote';
 import AnecdoteList from './components/anecdotelist';
 import CreateNew from './components/createnew';
 import Footer from './components/footer';
-import Menu from './components/menu';
+import Navigation from './components/navigation';
 import Notification from './components/notification';
 
 let anecdoteTimeout;
@@ -70,7 +70,7 @@ class App extends React.Component {
         <Router>
           <div>
             <Header as="h1">Software anecdotes</Header>
-            <Menu />
+            <Navigation />
             <Notification notification={this.state.notification} />
             <Route exact path="/" render={() => <Redirect to="/anecdotes" />} />
 
