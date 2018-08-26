@@ -17,12 +17,34 @@ const AnecdoteList = ({ anecdotes }) => (
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map(anecdote => (
-        <li key={anecdote.id}>{anecdote.content}</li>
+        <Link to={`/anecdotes/${anecdote.id}`}>
+          <li key={anecdote.id}>{anecdote.content}</li>
+        </Link>
       ))}
     </ul>
   </div>
 );
 
+const Anecdote = ({ anecdote }) => {
+  const { content, votes, info, author, id } = anecdote;
+  return (
+    <div>
+      <h1>{content}</h1>
+      <p>has {votes} votes</p>
+      <p>
+        for more info see <a href={info}>{info}</a>
+      </p>
+    </div>
+  );
+};
+
+/*
+          content: 'Premature optimization is the root of all evil',
+          author: 'Donald Knuth',
+          info: 'http://wiki.c2.com/?PrematureOptimization',
+          votes: 0,
+          id: '2'
+*/
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
@@ -177,6 +199,13 @@ class App extends React.Component {
             exact
             path="/"
             render={() => <AnecdoteList anecdotes={this.state.anecdotes} />}
+          />
+          <Route
+            exact
+            path="/anecdotes/:id"
+            render={({ match }) => (
+              <Anecdote anecdote={this.anecdoteById(match.params.id)} />
+            )}
           />
           <Route exact path="/about" render={() => <About />} />
           <Route
