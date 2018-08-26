@@ -82,6 +82,7 @@ class CreateNew extends React.Component {
       info: this.state.info,
       votes: 0
     });
+    this.props.history.push('/');
   };
 
   render() {
@@ -181,7 +182,9 @@ class App extends React.Component {
           <Route
             exact
             path="/new"
-            render={() => <CreateNew addNew={this.addNew} />}
+            render={({ history }) => (
+              <CreateNew addNew={this.addNew} history={history} />
+            )}
           />
           <Footer />
         </div>
