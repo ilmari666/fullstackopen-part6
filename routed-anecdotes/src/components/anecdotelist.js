@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'semantic-ui-react';
+import { Table, Header } from 'semantic-ui-react';
 const AnecdoteList = ({ anecdotes }) => (
   <div>
-    <h2>Anecdotes</h2>
+    <Header size="large">Anecdotes</Header>
     <Table basic="very" striped>
       <Table.Body>
         {anecdotes.map(anecdote => (
